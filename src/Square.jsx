@@ -2,15 +2,28 @@ import { useEffect, useState } from "react";
 import "./styles/Square.css";
 
 const Square = (props) => {
-  console.log(props);
+  // console.log(props);
   const [state, setState] = useState();
-  const { id, boardState, setBoardState, turn, setTurn, endGame } = props;
+  const {
+    id,
+    boardState,
+    setBoardState,
+    turn,
+    setTurn,
+    endGame,
+    resetGame,
+    setResetGame,
+  } = props;
   const [clickable, setClickable] = useState(true);
 
   useEffect(() => {
     console.log("updated state");
-    setClickable(true);
   }, [boardState]);
+
+  useEffect(() => {
+    setClickable(true);
+    setResetGame(false);
+  }, [resetGame]);
 
   const handleClick = () => {
     if (clickable && !endGame) {

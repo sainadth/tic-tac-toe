@@ -19,6 +19,7 @@ const Board = (props) => {
   });
   const [turn, setTurn] = useState(true);
   const [endGame, setEndGame] = useState(false);
+  const [draw, setDraw] = useState(false);
   const side = 3;
   let board = [];
   for (let i = 0; i < side; i++) {
@@ -43,9 +44,10 @@ const Board = (props) => {
         9: null,
       });
     }
-    setResetGame(false);
+    // setResetGame(false);
     setEndGame(false);
     setTurn(true);
+    setDraw(false);
   }, [resetGame]);
 
   useEffect(() => {
@@ -110,7 +112,16 @@ const Board = (props) => {
     ) {
       console.log("Winner is = ", boardState[2]);
       return true;
-    } else return false;
+    } else {
+      for (let i = 0; i < 9; i++) {
+        if (boardState[i]) {
+        } else {
+          return false;
+        }
+      }
+      setDraw(true);
+      return true;
+    }
   };
   return (
     <>
@@ -123,14 +134,24 @@ const Board = (props) => {
           Next Player : {turn ? "X" : "O"}
         </div>
       )}
-      {endGame && (
+      {draw ? (
         <div
           style={{
             margin: "0 0 1rem 0",
           }}
         >
-          Winner : {turn ? "O" : "X"}
+          Game Draw
         </div>
+      ) : (
+        endGame && (
+          <div
+            style={{
+              margin: "0 0 1rem 0",
+            }}
+          >
+            Winner : {turn ? "O" : "X"}
+          </div>
+        )
       )}
       <div className="board">
         {board.map((ele) => {
@@ -143,6 +164,8 @@ const Board = (props) => {
               turn={turn}
               setTurn={setTurn}
               endGame={endGame}
+              resetGame={resetGame}
+              setResetGame={setResetGame}
             />
           );
         })}
