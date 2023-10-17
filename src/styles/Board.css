@@ -1,0 +1,5 @@
+.board {
+  display: grid;
+  grid: repeat(3, 60px) / auto-flow 80px;
+  /* width: 30px; */
+}
